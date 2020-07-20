@@ -4,6 +4,7 @@
 
 import { saveAs } from 'file-saver'
 
+
   @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
@@ -29,7 +30,7 @@ import { saveAs } from 'file-saver'
       const toast = await this.toastController.create({
         header: 'Resultado',
         message: resultadoAnalisis,
-        duration: 4000,
+        duration: 6000,
         position: 'bottom',
         buttons: [
           {
@@ -207,62 +208,143 @@ import { saveAs } from 'file-saver'
       let numAtributosObjetos=[]
       let opcion=0;
       cuantosObjetos++;
+      let condicionInicio = entrada[0];
+      console.log("ARREGLO O CLASE= "+condicionInicio)
 
       //console.log("MUCHO TEXTO "+clasecita);
       //console.log(" Objetos "+objetitos);
-      
-      if(objetitos.includes("-")){
-        opcion=1;
-        console.log("Existe mas de un objeto");
-        //console.log(" tamaño "+clasecita.length);
-        for (let index = 0; index < clasecita.length; index++) {
-          const abc = clasecita[index];
-          if(abc == ","){
-            contadorComasClase++;
+      if(condicionInicio=="ARREGLO"){
+        console.log("Estoy en la primer opcion")
+        if(objetitos.includes("-")){
+          opcion=1;
+          console.log("Existe mas de un objeto");
+          //console.log(" tamaño "+clasecita.length);
+          for (let index = 0; index < clasecita.length; index++) {
+            const abc = clasecita[index];
+            if(abc == ","){
+              contadorComasClase++;
+            }
+          }
+          let arreglito = this.separarObjetos(objetitos, rregloAux, cuantosObjetos, numAtributosObjetos);
+          let b = 0, verdad=0;
+          //console.log("comas clase varios objts "+ contadorComasClase)
+          for(let i = 0; i < arreglito.length; i++){
+            b++;
+            contadorComasObjetos = arreglito[i];
+            if(contadorComasClase == contadorComasObjetos){
+              console.log("SEMANTICA CORRECTA")
+              verdad++;
+            }else if(contadorComasClase > contadorComasObjetos){
+              console.log("Hay un error");
+              this.presentToast("ERROR SEMANTICO --- Hay mas atributos en la clase que en el objeto "+ b);
+              break;
+            }else if(contadorComasClase < contadorComasObjetos){
+              console.log("Hay un error");
+              this.presentToast("ERROR SEMANTICO ---Hay mas atributos en la creacion del objeto " + b);
+              break;
+            }
+          }
+          if(verdad==arreglito.length){
+            this.crearCodigo(opcion);
+            this.presentToast("TODO BIEN, TODO CORRECTO Y YO QUE ME ALEGRO");
+          }else{
+            console.log("No todos estan bien")
+            this.presentToast("Hubo un error, no se pudo generar archivo");
+          }
+          
+        }else{
+          opcion=1;
+          for (let index = 0; index < clasecita.length; index++) {
+            const abc = clasecita[index];
+            if(abc == ","){
+              contadorComasClase++;
+            }
+          }
+          for (let index = 0; index < objetitos.length; index++) {
+            const xyz = objetitos[index];
+            if(xyz == ","){
+              contadorComasObjetos++;
+            }
+          }
+          if(contadorComasClase == contadorComasObjetos){
+            console.log("TODO BIEN, TODO CORRECTO Y YO QUE ME ALEGRO")
+            this.crearCodigo(opcion);
+          }else if(contadorComasClase > contadorComasObjetos){
+            console.log("Hay mas atributos en la clase")
+          }else if(contadorComasClase < contadorComasObjetos){
+            console.log("Hay mas atributos en la creacion del objeto")
           }
         }
-        let arreglito = this.separarObjetos(objetitos, rregloAux, cuantosObjetos, numAtributosObjetos);
-        let b = 0;
-        console.log("comas clase varios objts "+ contadorComasClase)
-        for(let i = 0; i < arreglito.length; i++){
-          b++;
-          contadorComasObjetos = arreglito[i];
+        //OPCION DE LLENADO ------------------------------------- 
+      }else if(condicionInicio=="CLASE"){
+        console.log("Estoy en la segunda opcion")
+        console.log("clase en 2opc "+clasecita);
+        console.log("Objetos en 2opc "+objetitos);
+        if(objetitos.includes("-")){
+          opcion=2;
+          console.log("Existe mas de un objeto segunda opcion");
+          //console.log(" tamaño "+clasecita.length);
+          for (let index = 0; index < clasecita.length; index++) {
+            const abc = clasecita[index];
+            if(abc == ","){
+              contadorComasClase++;
+            }
+          }
+          let arreglito = this.separarObjetos(objetitos, rregloAux, cuantosObjetos, numAtributosObjetos);
+          let b = 0, verdad=0;
+          //console.log("comas clase varios objts "+ contadorComasClase)
+          for(let i = 0; i < arreglito.length; i++){
+            b++;
+            contadorComasObjetos = arreglito[i];
+            if(contadorComasClase == contadorComasObjetos){
+              console.log("SEMANTICA CORRECTA")
+              
+              verdad++;
+            }else if(contadorComasClase > contadorComasObjetos){
+              console.log("Hay un error");
+              this.presentToast("ERROR SEMANTICO --- Hay mas atributos en la clase que en el objeto "+ b);
+              break;
+            }else if(contadorComasClase < contadorComasObjetos){
+              console.log("Hay un error");
+              this.presentToast("ERROR SEMANTICO ---Hay mas atributos en la creacion del objeto " + b);
+              break;
+            }
+          }
+          if(verdad==arreglito.length){
+            this.crearCodigo(opcion);
+            this.presentToast("TODO BIEN, TODO CORRECTO Y YO QUE ME ALEGRO");
+          }else{
+            console.log("No todos estan bien")
+            this.presentToast("Hubo un error, no se pudo generar archivo");
+          }
+          
+        }else{
+          opcion=2;
+          for (let index = 0; index < clasecita.length; index++) {
+            const abc = clasecita[index];
+            if(abc == ","){
+              contadorComasClase++;
+            }
+          }
+          for (let index = 0; index < objetitos.length; index++) {
+            const xyz = objetitos[index];
+            if(xyz == ","){
+              contadorComasObjetos++;
+            }
+          }
           if(contadorComasClase == contadorComasObjetos){
             console.log("SEMANTICA CORRECTA")
             this.presentToast("TODO BIEN, TODO CORRECTO Y YO QUE ME ALEGRO");
+            this.crearCodigo(opcion);
           }else if(contadorComasClase > contadorComasObjetos){
-            console.log("Hay un error");
-            this.presentToast("ERROR SEMANTICO --- Hay mas atributos en la clase que en el objeto "+ b);
-            break;
+            console.log("Hay mas atributos en la clase")
           }else if(contadorComasClase < contadorComasObjetos){
-            console.log("Hay un error");
-            this.presentToast("ERROR SEMANTICO ---Hay mas atributos en la creacion del objeto " + b);
-            break;
+            console.log("Hay mas atributos en la creacion del objeto")
           }
-        }
-      }else{
-        opcion=2;
-        for (let index = 0; index < clasecita.length; index++) {
-          const abc = clasecita[index];
-          if(abc == ","){
-            contadorComasClase++;
-          }
-        }
-        for (let index = 0; index < objetitos.length; index++) {
-          const xyz = objetitos[index];
-          if(xyz == ","){
-            contadorComasObjetos++;
-          }
-        }
-        if(contadorComasClase == contadorComasObjetos){
-          console.log("TODO BIEN, TODO CORRECTO Y YO QUE ME ALEGRO")
-        }else if(contadorComasClase > contadorComasObjetos){
-          console.log("Hay mas atributos en la clase")
-        }else if(contadorComasClase < contadorComasObjetos){
-          console.log("Hay mas atributos en la creacion del objeto")
         }
       }
-      this.crearCodigo(opcion);
+      
+
     }
 
     crearCodigo(opc){
@@ -403,8 +485,144 @@ import { saveAs } from 'file-saver'
         this.codigo+="\nfor i in "+aux+":\n\tprint(i)\n\tprint(type(i))"
         console.log(this.codigo)
         this.guardarArchivo(aux)
+        this.codigo=""
+        //CREAR CODIGO DE LA SEGUNDA OPCION
       }else if(opc == 2){
+        let a=0,b=0,c=0,d=0, cadena='', cadena2='';
+        let aux = "arreglo"
+        this.codigo+="import numpy\n\n"+aux+" = numpy.array([])\n"
+        let aux2 = entrada[2];
+        this.codigo+="\nclass " + aux2 + "():"
+        for (let index = 0; index < entrada2.length; index++) {
+          const element = entrada2[index];
+          cadena+=entrada2[index];
+          if(element == ")"){
+            a = index;
+            break;
+          }
+          if(element == "("){
+            b = index+1;
+          }
+        }
+        let atributos = cadena.substring(b, a);
+        //console.log(atributos)
+        this.codigo+="\n\tdef __init__(self,"+ atributos+"):";
+        let auxAT = atributos.split(",");
+        let selfs = []
+        let comas=0
+        for(let i =0; i<auxAT.length;i++){
+          if(auxAT[i]==","){
+            comas++,
+            console.log("ignore una coma");
+          }else{
+            selfs.push(auxAT[i])
+            const vari="\n\t\tself."+auxAT[i]+"="+auxAT[i]
+            const retorno = this.pegarCadena(vari)
+            this.codigo+=retorno
+          }
+        }
+        let cons = ' """\\ '
+        this.codigo+="\n\n\tdef __str__(self):\n\t\treturn"+cons
+        for(let i =0; i<selfs.length;i++){
+          this.codigo+="\n"+selfs[i]+": {}"
+        }
+        let cons2 = '\\n'
+        let cons3 = '"""'
+        this.codigo+=cons2+cons3+".format( "
+        
+        for(let i =0; i<selfs.length;i++){
+          if(i==selfs.length-1){
+            const vari="self."+selfs[i]+")\n"
+            const retorno = this.pegarCadena(vari)
+            this.codigo+=retorno
+          }else{
+            const vari="self."+selfs[i]+","
+            const retorno = this.pegarCadena(vari)
+            this.codigo+=retorno
+          }
+        }
+        for (let index = 0; index < entrada.length; index++) {
+          const element = entrada[index];
+          if(element == "OBJETOS"){
+            c = index;
+          }
+        }
+        c=c+2;
+        let muchosObjetos = entrada.slice(c, entrada.length);
+        let arregloObjetos = []
+        let e=0
+        for (let index = 0; index < muchosObjetos.length; index++) {
+          const element = muchosObjetos[index];
+          if(element == "-"){
+            d = index
+            const sliced = muchosObjetos.slice(e, d)
+            e=index+1
+            console.log(sliced)
+            arregloObjetos.push(sliced)
+          }
+          if(element == "."){
+            d = index
+            const sliced = muchosObjetos.slice(e, d)
+            console.log(sliced)
+            arregloObjetos.push(sliced)
+          }
+        }
+        comas=0
+        
+        let nombreObjetos=[]
+        for (let index = 0; index < arregloObjetos.length; index++) {
+          let vari=''
 
+          const element = arregloObjetos[index];
+          //console.log(element + " tamaño "+ element.length)
+          nombreObjetos.push(element[0])
+          for (let index2 = 1; index2 < element.length; index2++) {
+            const element2 = element[index2];
+            let dato = ''
+            let num = 0
+            //console.log("------"+element2)
+            switch (element2) {
+              case ("("):
+                vari+=element2
+                break;
+              case (","):
+                vari+=element2
+                break;
+              case (")"):
+                vari+=element2
+                break;
+              default:
+                try {
+                  num=parseInt(element2)
+                  if(isNaN(num)){
+                    vari+="\""+element2+"\"";
+                  }else{
+                    vari+=num;
+                  }
+                } catch (error) {
+                  vari+="\""+element2+"\"";
+                }
+                break;
+            }
+            vari+= dato
+            //console.log("esto es vari "+ vari)
+          } 
+          this.codigo+="\n"+element[0]+"="+aux2+vari
+        }
+        let agregar = ''
+        for (let index = 0; index < nombreObjetos.length; index++) {
+          const element = nombreObjetos[index];
+          if(index==nombreObjetos.length-1){
+            agregar+=element
+          }else{
+            agregar+=element+","
+          }
+        }
+        this.codigo+="\n\n"+aux+"= numpy.append ("+aux+",["+agregar+"])"
+        this.codigo+="\nfor i in "+aux+":\n\tprint(i)\n\tprint(type(i))"
+        console.log(this.codigo)
+        this.guardarArchivo(aux)
+        this.codigo=""
       }
     }
 
