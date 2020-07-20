@@ -1,0 +1,36 @@
+<ion-app>
+  <ion-header>
+    <ion-toolbar color="warning">
+      <ion-title class="titulo" text-center color="dark"> Estructura de Datos </ion-title>
+    </ion-toolbar>
+    <ion-toolbar color="warning">
+      <ion-title class="titulo" text-center color="dark"> Arreglos </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+      <div class="sentencia">
+        <ion-item>
+          <ion-label position="floating">Cadena a validar</ion-label>
+          <ion-textarea
+          auto-grow="true" [(ngModel)]="cadenaEntrada" clearInput ></ion-textarea>
+        </ion-item>
+      </div>
+      
+      <div>
+        <ion-button expand="block" (click)="analizadorLexico()" text-color="dark" color="tertiary">VALIDAR</ion-button>
+      </div>
+      <div>
+        <ion-button expand="block" (click)="limpiar()" color="tertiary" text-color="dark" fill="outline">LIMPIAR</ion-button>
+      </div>
+      <div class="lista">
+        <ion-list *ngFor="let item of lexemas">
+          <ion-item [color]="item.color">
+            <ion-label>
+              <h2><strong>{{item.value}}</strong></h2>
+              <h3>{{item.token}}</h3>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+  </ion-content> 
+</ion-app>

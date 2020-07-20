@@ -1,0 +1,43 @@
+.sentencia{
+    display: block;
+    position: relative;
+}
+.lista{
+    height: 70%;
+    overflow: auto;
+}
+.textarea{
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+    z-index: 3;
+    position: relative;
+    overflow-y:none;
+    width: 100%;
+    resize: none;
+    height: 100px;
+}
+div {
+    display: block;
+}
+.colores-lexemas{
+    padding: 2px;
+    overflow-y: auto;
+    overflow: hidden;
+    height: 100px;
+    resize: none;
+    border-color: transparent;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0;
+    color: transparent;
+    position: absolute;
+    z-index: 2;
+    white-space:pre-wrap;
+    word-wrap: break-word; 
+}
+.titulo{
+    color:'#FFFFFF';
+}

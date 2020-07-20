@@ -1,0 +1,14 @@
+{"S":{"ARREGLO":[ "ARREGLO", ":", "nombre", "CLASE", ":", "clase",  "OBJETOS", ":", "informacionObjetos"], "CLASE":["CLASE", ":", "clase", "OBJETOS", ":", "informacionObjetos"]},
+"nombre":{ "identificador":["letras","restoLetras"]},
+"letras":{"identificador":["identificador"]},
+"restoLetras":{"identificador":["letras", "restoLetras"], "_":["_", "restoLetras"], "CLASE":[], "(":[], ",":[], "OBJETOS":[], ")":[]},
+"clase":{"identificador":["nombre", "Atributos"]},
+"Atributos":{"(":["(", "nombre", "RestoAtributo", ")"]},
+"RestoAtributo":{",":[",","nombre","RestoAtributo"], ")":[]},
+"informacionObjetos":{"identificador":["nombre", "(", "variables", ")", "restoInfo", "."]},
+"restoInfo":{"-":["-", "nombre", "(", "variables", ")", "restoInfo"], ".":[]},
+"variables":{"numero":["data", "resto"], "identificador":["data", "resto"]},
+"resto":{",":[",", "data", "resto"], ")":[]},
+"data":{"numero":["numero", "digitoResto"], "identificador":["letras","restoLetras"]},
+"digitoResto":{"numero":["numero", "digitoResto"], ",":[], ")":[]}
+}
